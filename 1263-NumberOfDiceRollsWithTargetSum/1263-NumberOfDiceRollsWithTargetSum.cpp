@@ -1,0 +1,28 @@
+// Last updated: 10/5/2025, 8:56:07 AM
+class Solution {
+public:
+    int t[31][1001]; 
+    const int MOD = 1e9 + 7;
+
+    int solve(int n, int k, int target) {
+        if (target < 0) return 0; 
+
+        if (t[n][target] != -1) return t[n][target];
+
+        if (n == 0 && target == 0) return 1; 
+
+        if (n == 0) return 0; 
+
+        int ways = 0;
+        for (int i = 1; i <= k; i++) {
+            ways = (ways + solve(n - 1, k, target - i)) % MOD;
+        }
+
+        return t[n][target] = ways;
+    }
+
+    int numRollsToTarget(int n, int k, int target) {
+        memset(t, -1, sizeof(t));
+        return solve(n, k, target);
+    }
+};
